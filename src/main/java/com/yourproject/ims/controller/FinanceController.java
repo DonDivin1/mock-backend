@@ -1,26 +1,44 @@
 package com.yourproject.ims.controller;
 
 import com.yourproject.ims.model.FinanceBalance;
-import com.yourproject.ims.service.FinanceService;
+import com.yourproject.ims.repository.FinanceBalanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/api/v1/finance/student-payments")
+@RequestMapping("/api/v1/finance")
 @CrossOrigin(origins = "*")
 public class FinanceController {
 
     @Autowired
-    private FinanceService financeService;
+    private FinanceBalanceRepository financeRepository;
 
-    @GetMapping("/my-balance")
-    public ResponseEntity<FinanceBalance> getMyBalance(@RequestParam String studentId) {
-        FinanceBalance balance = financeService.getBalance(studentId);
-        if (balance != null) {
-            return ResponseEntity.ok(balance);
+    @GetMapping("/student-payments/my-balance")
+    public ResponseEntity<?> getMyBalance(@RequestParam String studentId) {
+        return financeRepository.findById(studentId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.ok(new FinanceBalance(studentId, 0.0)));
+    }
+
+    @PutMapping("/admin/update-balance")
+    public ResponseEntity<?> manualBalanceUpdate(
+            @RequestParam String studentId,
+            @RequestParam Double newBalance) {
+
+        Optional<FinanceBalance> financeOpt = financeRepository.findById(studentId);
+
+        FinanceBalance finance;
+        if (financeOpt.isPresent()) {
+            finance = financeOpt.get();
+            finance.setBalance(newBalance);
         } else {
-            return ResponseEntity.notFound().build();
+            finance = new FinanceBalance(studentId, newBalance);
         }
+
+        financeRepository.save(finance);
+        return ResponseEntity.ok(finance);
     }
 }
