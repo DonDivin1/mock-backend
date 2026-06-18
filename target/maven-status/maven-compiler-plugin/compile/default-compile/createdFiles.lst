@@ -1,4 +1,6 @@
 com\yourproject\ims\config\WebSecurityConfig.class
+com\yourproject\ims\model\AcademicRecord.class
+com\yourproject\ims\repository\AcademicRecordRepository.class
 com\yourproject\ims\dto\LoginResponse.class
 com\yourproject\ims\controller\DashboardController.class
 com\yourproject\ims\controller\TermController.class
@@ -17,14 +19,17 @@ com\yourproject\ims\repository\GradeRepository.class
 com\yourproject\ims\repository\TermRepository.class
 com\yourproject\ims\service\AuthService.class
 com\yourproject\ims\controller\AuthController.class
+com\yourproject\ims\controller\HomeController.class
 com\yourproject\ims\dto\DashboardResponse.class
 com\yourproject\ims\repository\AnnouncementRepository.class
 com\yourproject\ims\dto\DashboardResponse$RegistrationSummary.class
 com\yourproject\ims\service\RegistrationService.class
 com\yourproject\ims\dto\DashboardResponse$Bulletin.class
 com\yourproject\ims\dto\DashboardResponse$GpaData.class
+com\yourproject\ims\controller\LoginRequest.class
 com\yourproject\ims\controller\RegistrationController.class
 com\yourproject\ims\service\DashboardService.class
+com\yourproject\ims\config\DataSourceConfig.class
 com\yourproject\ims\controller\FinanceController.class
 com\yourproject\ims\model\User.class
 com\yourproject\ims\dto\LoginRequest.class

@@ -21,7 +21,7 @@ public class RegistrationService {
 
     @Transactional
     public Registration getStudentRegistration(String termId, String studentId) {
-        Optional<Registration> registrationOpt = registrationRepository.findByTermIdAndStudentId(termId, studentId);
+        Optional<Registration> registrationOpt = registrationRepository.findByStudentIdAndTermId(studentId, termId);
 
         if (registrationOpt.isPresent()) {
             Registration registration = registrationOpt.get();
@@ -29,7 +29,7 @@ public class RegistrationService {
             if (registration.getTotalFee() != null) {
                 Optional<FinanceBalance> financeOpt = financeRepository.findById(studentId);
                 if (financeOpt.isEmpty()) {
-                    financeRepository.save(new FinanceBalance(studentId, -registration.getTotalFee()));
+                    financeRepository.save(new FinanceBalance(studentId, -registration.getTotalFee().doubleValue()));
                 }
             }
             return registration;

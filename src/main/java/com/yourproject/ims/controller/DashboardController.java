@@ -15,7 +15,8 @@ public class DashboardController {
     private DashboardService dashboardService;
 
     @GetMapping("/dashboard")
-    public ResponseEntity<DashboardResponse> getStudentDashboard(@RequestParam String studentId) {
+    public ResponseEntity<DashboardResponse> getStudentDashboard(
+            @RequestParam(value = "studentId", required = false, defaultValue = "25306") String studentId) {
         DashboardResponse dashboard = dashboardService.getDashboardData(studentId);
         return ResponseEntity.ok(dashboard);
     }

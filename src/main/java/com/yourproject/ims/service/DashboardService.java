@@ -71,13 +71,18 @@ public class DashboardService {
         response.setRecentGrades(recentGrades);
         response.setTotalPassedCourses(passedCourses);
 
-        Optional<Registration> regOpt = registrationRepository.findByTermIdAndStudentId(currentTermId, studentId);
+        Optional<Registration> regOpt = registrationRepository.findByStudentIdAndTermId(studentId, currentTermId);
         DashboardResponse.RegistrationSummary summary = new DashboardResponse.RegistrationSummary();
         summary.setCurrentTermId(currentTermId);
 
         if (regOpt.isPresent()) {
             Registration reg = regOpt.get();
-            summary.setRegistrationStatus(reg.getValidationStatus());
+            String validationStatus = reg.getValidationStatus();
+            if ("APPROVED".equalsIgnoreCase(validationStatus)) {
+                summary.setRegistrationStatus("REGISTERED");
+            } else {
+                summary.setRegistrationStatus(validationStatus);
+            }
             summary.setCourses(reg.getCourses());
             summary.setCourseCount(reg.getCourses().size());
         } else {
