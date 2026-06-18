@@ -8,23 +8,32 @@ import java.time.LocalTime;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "course_name")
     private String courseName;
+
     private Integer credits;
+
+    @Column(name = "course_code")
     private String courseCode;
 
-    @Column(name = "course_group")
-    private String group;
-
+    @Column(name = "lecturer_name")
     private String lecturerName;
+
     private Integer size;
+
+    @Column(name = "room_name")
     private String roomName;
+
     private String day;
 
+    @Column(name = "start_time")
     private LocalTime startTime;
+
+    @Column(name = "end_time")
     private LocalTime endTime;
+
     private Boolean locked;
 
     public Long getId() { return id; }
@@ -35,8 +44,6 @@ public class Course {
     public void setCredits(Integer credits) { this.credits = credits; }
     public String getCourseCode() { return courseCode; }
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
-    public String getGroup() { return group; }
-    public void setGroup(String group) { this.group = group; }
     public String getLecturerName() { return lecturerName; }
     public void setLecturerName(String lecturerName) { this.lecturerName = lecturerName; }
     public Integer getSize() { return size; }

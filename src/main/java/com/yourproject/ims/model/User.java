@@ -17,11 +17,18 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private String email;
-    private String role;
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
+    @Column(unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String role;
+
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_permissions", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "permissions")
     private List<String> permissions;
 
     public Long getId() { return id; }

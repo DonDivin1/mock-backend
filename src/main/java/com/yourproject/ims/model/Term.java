@@ -1,8 +1,6 @@
 package com.yourproject.ims.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -16,15 +14,13 @@ public class Term {
     private String semester;
     private String description;
 
+    @Column(name = "start_date")
     private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalDate registrationStartDate;
-    private LocalDate registrationEndDate;
 
-    private Boolean active;
-    private Boolean isRegistrationOpen;
-    private Boolean isPreregistrationOpen;
-    private Boolean isShortSemester;
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    private boolean active;
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -38,16 +34,6 @@ public class Term {
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
     public LocalDate getEndDate() { return endDate; }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
-    public LocalDate getRegistrationStartDate() { return registrationStartDate; }
-    public void setRegistrationStartDate(LocalDate registrationStartDate) { this.registrationStartDate = registrationStartDate; }
-    public LocalDate getRegistrationEndDate() { return registrationEndDate; }
-    public void setRegistrationEndDate(LocalDate registrationEndDate) { this.registrationEndDate = registrationEndDate; }
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
-    public Boolean getIsRegistrationOpen() { return isRegistrationOpen; }
-    public void setIsRegistrationOpen(Boolean isRegistrationOpen) { this.isRegistrationOpen = isRegistrationOpen; }
-    public Boolean getIsPreregistrationOpen() { return isPreregistrationOpen; }
-    public void setIsPreregistrationOpen(Boolean isPreregistrationOpen) { this.isPreregistrationOpen = isPreregistrationOpen; }
-    public Boolean getIsShortSemester() { return isShortSemester; }
-    public void setIsShortSemester(Boolean isShortSemester) { this.isShortSemester = isShortSemester; }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }

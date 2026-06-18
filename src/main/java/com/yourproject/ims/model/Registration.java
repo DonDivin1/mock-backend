@@ -11,18 +11,38 @@ public class Registration {
     @Id
     private String id;
 
+    @Column(name = "student_id")
     private String studentId;
+
+    @Column(name = "student_name")
     private String studentName;
+
+    @Column(name = "student_department_code")
     private String studentDepartmentCode;
+
+    @Column(name = "student_department")
     private String studentDepartment;
+
+    @Column(name = "student_faculty")
     private String studentFaculty;
+
+    @Column(name = "student_program")
     private String studentProgram;
+
+    @Column(name = "term_id")
     private String termId;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "validation_status")
     private String validationStatus;
-    private Double totalFee;
+
+    @Column(name = "total_fee")
+    private Integer totalFee;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -54,8 +74,8 @@ public class Registration {
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
     public String getValidationStatus() { return validationStatus; }
     public void setValidationStatus(String validationStatus) { this.validationStatus = validationStatus; }
-    public Double getTotalFee() { return totalFee; }
-    public void setTotalFee(Double totalFee) { this.totalFee = totalFee; }
+    public Integer getTotalFee() { return totalFee; }
+    public void setTotalFee(Integer totalFee) { this.totalFee = totalFee; }
     public List<Course> getCourses() { return courses; }
     public void setCourses(List<Course> courses) { this.courses = courses; }
 }

@@ -1,26 +1,25 @@
 package com.yourproject.ims.controller;
 
-import com.yourproject.ims.model.Term;
-import com.yourproject.ims.service.TermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.yourproject.ims.model.Term;
+import com.yourproject.ims.repository.TermRepository;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/registration")
-@CrossOrigin(origins = "*")
 public class TermController {
 
     @Autowired
-    private TermService termService;
+    private TermRepository termRepository;
 
     @GetMapping("/term")
-    public ResponseEntity<Term> getTerm(@RequestParam(required = false) String id) {
-        Term term = termService.getTerm(id);
-        if (term != null) {
-            return ResponseEntity.ok(term);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getActiveTerm() {
+        Optional<Term> activeTerm = termRepository.findByActiveTrue();
+        if (activeTerm.isPresent()) {
+            return ResponseEntity.ok(activeTerm.get());
         }
+        return ResponseEntity.notFound().build();
     }
 }
