@@ -35,7 +35,7 @@ public class DashboardService {
         DashboardResponse response = new DashboardResponse();
 
         Optional<Term> activeTermOpt = termRepository.findByActiveTrue();
-        String currentTermId = activeTermOpt.map(Term::getId).orElse("2025/1");
+        String currentTermId = activeTermOpt.map(Term::getId).orElse("");
 
         List<Announcement> announcements = announcementRepository.findAll();
 

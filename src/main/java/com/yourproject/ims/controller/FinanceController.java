@@ -17,19 +17,10 @@ public class FinanceController {
     private FinanceBalanceRepository financeRepository;
 
     @GetMapping("/student-payments/my-balance")
-    public ResponseEntity<?> getMyBalance(@RequestParam(value = "studentId", required = false, defaultValue = "25306") String studentId) {
-        Optional<FinanceBalance> balanceOpt = financeRepository.findById(studentId);
-
-        if (balanceOpt.isPresent()) {
-            FinanceBalance balance = balanceOpt.get();
-            if (balance.getBalance() == null || balance.getBalance() >= 0) {
-                balance.setBalance(-75000.0);
-            }
-            return ResponseEntity.ok(balance);
-        }
-
-        FinanceBalance defaultBalance = new FinanceBalance(studentId, -75000.0);
-        return ResponseEntity.ok(defaultBalance);
+    public ResponseEntity<?> getMyBalance(@RequestParam String studentId) {
+        return financeRepository.findById(studentId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.ok(new FinanceBalance(studentId, 0.0)));
     }
 
     @PutMapping("/admin/update-balance")

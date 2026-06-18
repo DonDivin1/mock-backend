@@ -18,7 +18,7 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public ResponseEntity<?> getStudentRegistration(
-            @RequestParam(value = "studentId", required = false, defaultValue = "25306") String studentId,
+            @RequestParam String studentId,
             @RequestParam String termId) {
         Optional<Registration> registrationOpt = registrationRepository.findByStudentIdAndTermId(studentId, termId);
         if (registrationOpt.isPresent()) {
