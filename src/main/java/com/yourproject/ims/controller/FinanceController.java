@@ -17,7 +17,7 @@ public class FinanceController {
     private FinanceBalanceRepository financeRepository;
 
     @GetMapping("/student-payments/my-balance")
-    public ResponseEntity<?> getMyBalance(@RequestParam String studentId) {
+    public ResponseEntity<?> getMyBalance(@RequestHeader("X-Student-Id") String studentId) {
         return financeRepository.findById(studentId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.ok(new FinanceBalance(studentId, 0.0)));
@@ -25,7 +25,7 @@ public class FinanceController {
 
     @PutMapping("/admin/update-balance")
     public ResponseEntity<?> manualBalanceUpdate(
-            @RequestParam String studentId,
+            @RequestHeader("X-Student-Id") String studentId,
             @RequestParam Double newBalance) {
 
         Optional<FinanceBalance> financeOpt = financeRepository.findById(studentId);
