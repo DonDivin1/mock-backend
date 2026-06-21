@@ -1,8 +1,10 @@
 package com.yourproject.ims.controller;
 
 import com.yourproject.ims.model.FinanceBalance;
+import com.yourproject.ims.model.PaymentTransaction;
 import com.yourproject.ims.model.Registration;
 import com.yourproject.ims.repository.FinanceBalanceRepository;
+import com.yourproject.ims.repository.PaymentTransactionRepository;
 import com.yourproject.ims.repository.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ public class FinanceController {
 
     @Autowired
     private RegistrationRepository registrationRepository;
+
+    @Autowired
+    private PaymentTransactionRepository transactionRepository;
 
     @GetMapping("/my-balance")
     public ResponseEntity<?> getMyBalance(@RequestHeader("X-Student-Id") String studentId) {
@@ -52,8 +57,21 @@ public class FinanceController {
         FinanceBalance account = financeRepository.findById(studentId)
                 .orElse(new FinanceBalance(studentId, defaultBalance));
 
+        if (transactionId != null && !transactionId.isEmpty()) {
+            Optional<PaymentTransaction> existingTx = transactionRepository
+                    .findByTransactionId(transactionId);
+            if (existingTx.isPresent()) {
+                return ResponseEntity.ok(account);
+            }
+        }
+
         account.setBalance(account.getBalance() + amount.doubleValue());
         financeRepository.save(account);
+
+        if (transactionId != null && !transactionId.isEmpty()) {
+            transactionRepository.save(
+                    new PaymentTransaction(transactionId, studentId, amount.doubleValue()));
+        }
 
         return ResponseEntity.ok(account);
     }
