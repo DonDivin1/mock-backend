@@ -41,4 +41,17 @@ public class FinanceController {
         financeRepository.save(finance);
         return ResponseEntity.ok(finance);
     }
+
+    @PostMapping("/pay")
+    public ResponseEntity<FinanceBalance> processPayment(
+            @RequestHeader("X-Student-Id") String studentId,
+            @RequestParam Double amount) {
+
+        FinanceBalance account = financeRepository.findById(studentId)
+                .orElse(new FinanceBalance(studentId, -300000.0));
+
+        account.setBalance(account.getBalance() + amount);
+
+        return ResponseEntity.ok(financeRepository.save(account));
+    }
 }
