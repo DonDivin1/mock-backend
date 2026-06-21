@@ -1,7 +1,9 @@
 package com.yourproject.ims.controller;
 
 import com.yourproject.ims.model.FinanceBalance;
+import com.yourproject.ims.model.Registration;
 import com.yourproject.ims.repository.FinanceBalanceRepository;
+import com.yourproject.ims.repository.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ public class FinanceController {
 
     @Autowired
     private FinanceBalanceRepository financeRepository;
+
+    @Autowired
+    private RegistrationRepository registrationRepository;
 
     @GetMapping("/student-payments/my-balance")
     public ResponseEntity<?> getMyBalance(@RequestHeader("X-Student-Id") String studentId) {
@@ -47,8 +52,14 @@ public class FinanceController {
             @RequestHeader("X-Student-Id") String studentId,
             @RequestParam Double amount) {
 
+        Optional<Registration> regOpt = registrationRepository
+                .findTopByStudentIdOrderByCreatedAtDesc(studentId);
+        Double defaultBalance = regOpt
+                .map(r -> r.getTotalFee() != null ? -r.getTotalFee().doubleValue() : -300000.0)
+                .orElse(-300000.0);
+
         FinanceBalance account = financeRepository.findById(studentId)
-                .orElse(new FinanceBalance(studentId, -300000.0));
+                .orElse(new FinanceBalance(studentId, defaultBalance));
 
         account.setBalance(account.getBalance() + amount);
 
