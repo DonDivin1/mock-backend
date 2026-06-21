@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/finance")
+@RequestMapping("/api/v1/finance/student-payments")
 @CrossOrigin(origins = "*")
 public class FinanceController {
 
@@ -21,48 +22,39 @@ public class FinanceController {
     @Autowired
     private RegistrationRepository registrationRepository;
 
-    @GetMapping("/student-payments/my-balance")
+    @GetMapping("/my-balance")
     public ResponseEntity<?> getMyBalance(@RequestHeader("X-Student-Id") String studentId) {
         return financeRepository.findById(studentId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.ok(new FinanceBalance(studentId, 0.0)));
     }
 
-    @PutMapping("/admin/update-balance")
-    public ResponseEntity<?> manualBalanceUpdate(
-            @RequestHeader("X-Student-Id") String studentId,
-            @RequestParam Double newBalance) {
-
-        Optional<FinanceBalance> financeOpt = financeRepository.findById(studentId);
-
-        FinanceBalance finance;
-        if (financeOpt.isPresent()) {
-            finance = financeOpt.get();
-            finance.setBalance(newBalance);
-        } else {
-            finance = new FinanceBalance(studentId, newBalance);
-        }
-
-        financeRepository.save(finance);
-        return ResponseEntity.ok(finance);
-    }
-
     @PostMapping("/pay")
-    public ResponseEntity<FinanceBalance> processPayment(
+    public ResponseEntity<?> processPayment(
             @RequestHeader("X-Student-Id") String studentId,
-            @RequestParam Double amount) {
+            @RequestParam BigDecimal amount,
+            @RequestParam(required = false) String transactionId) {
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            return ResponseEntity.badRequest().body("Invalid amount");
+        }
 
         Optional<Registration> regOpt = registrationRepository
                 .findTopByStudentIdOrderByCreatedAtDesc(studentId);
-        Double defaultBalance = regOpt
-                .map(r -> r.getTotalFee() != null ? -r.getTotalFee().doubleValue() : -300000.0)
-                .orElse(-300000.0);
+        if (regOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Double defaultBalance = regOpt.get().getTotalFee() != null
+                ? -regOpt.get().getTotalFee().doubleValue()
+                : -300000.0;
 
         FinanceBalance account = financeRepository.findById(studentId)
                 .orElse(new FinanceBalance(studentId, defaultBalance));
 
-        account.setBalance(account.getBalance() + amount);
+        account.setBalance(account.getBalance() + amount.doubleValue());
+        financeRepository.save(account);
 
-        return ResponseEntity.ok(financeRepository.save(account));
+        return ResponseEntity.ok(account);
     }
 }
