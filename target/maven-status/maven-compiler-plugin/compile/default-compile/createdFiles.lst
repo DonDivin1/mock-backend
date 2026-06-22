@@ -1,7 +1,9 @@
 com\yourproject\ims\config\WebSecurityConfig.class
 com\yourproject\ims\model\AcademicRecord.class
+com\yourproject\ims\repository\PaymentTransactionRepository.class
 com\yourproject\ims\repository\AcademicRecordRepository.class
 com\yourproject\ims\dto\LoginResponse.class
+com\yourproject\ims\model\PaymentTransaction.class
 com\yourproject\ims\controller\DashboardController.class
 com\yourproject\ims\controller\TermController.class
 com\yourproject\ims\service\FinanceService.class

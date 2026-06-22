@@ -15,6 +15,7 @@ C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\mo
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\Course.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\FinanceBalance.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\Grade.java
+C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\PaymentTransaction.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\Registration.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\Term.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\User.java
@@ -22,6 +23,7 @@ C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\re
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\AnnouncementRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\FinanceBalanceRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\GradeRepository.java
+C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\PaymentTransactionRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\RegistrationRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\TermRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\UserRepository.java
