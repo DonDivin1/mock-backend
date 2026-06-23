@@ -25,14 +25,28 @@ public class AdminAcademicController {
     @PutMapping("/terms/{termId}/activate")
     public ResponseEntity<?> activateTerm(@PathVariable String termId) {
         List<Term> allTerms = termRepository.findAll();
+        boolean termExists = false;
+
         for (Term term : allTerms) {
             if (term.getId().equals(termId)) {
                 term.setActive(true);
+                termExists = true;
             } else {
                 term.setActive(false);
             }
             termRepository.save(term);
         }
+
+        // BACKEND MIGRATION: Auto-create the term if it doesn't exist!
+        // This ensures the Student Registration page always finds an active term.
+        if (!termExists) {
+            Term newTerm = new Term();
+            newTerm.setId(termId);
+            newTerm.setActive(true);
+            // Add defaults if your Term model requires them (e.g., newTerm.setSemester("1"))
+            termRepository.save(newTerm);
+        }
+
         return ResponseEntity.ok("Term " + termId + " is now ACTIVE. Registration is open.");
     }
 
@@ -40,8 +54,6 @@ public class AdminAcademicController {
     @PostMapping("/courses")
     public ResponseEntity<?> addCourse(@RequestBody Course course) {
         try {
-            // The setCredits method inside Course.java will automatically validate the <=4 rule 
-            // and calculate the fee (credits * 21300)
             Course savedCourse = courseRepository.save(course);
             return ResponseEntity.ok(savedCourse);
         } catch (IllegalArgumentException e) {
