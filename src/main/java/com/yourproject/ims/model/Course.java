@@ -8,6 +8,7 @@ import java.time.LocalTime;
 public class Course {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "course_name")
@@ -36,26 +37,62 @@ public class Course {
 
     private Boolean locked;
 
+    // --- NEW FIELDS FOR REGISTRATION ---
+    @Column(name = "term_id")
+    private String termId;
+    
+    private Double fee;
+
+    // --- GETTERS & SETTERS ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+    
     public String getCourseName() { return courseName; }
     public void setCourseName(String courseName) { this.courseName = courseName; }
-    public Integer getCredits() { return credits; }
-    public void setCredits(Integer credits) { this.credits = credits; }
+    
     public String getCourseCode() { return courseCode; }
     public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+    
     public String getLecturerName() { return lecturerName; }
     public void setLecturerName(String lecturerName) { this.lecturerName = lecturerName; }
+    
     public Integer getSize() { return size; }
     public void setSize(Integer size) { this.size = size; }
+    
     public String getRoomName() { return roomName; }
     public void setRoomName(String roomName) { this.roomName = roomName; }
+    
     public String getDay() { return day; }
     public void setDay(String day) { this.day = day; }
+    
     public LocalTime getStartTime() { return startTime; }
     public void setStartTime(LocalTime startTime) { this.startTime = startTime; }
+    
     public LocalTime getEndTime() { return endTime; }
     public void setEndTime(LocalTime endTime) { this.endTime = endTime; }
+    
     public Boolean getLocked() { return locked; }
     public void setLocked(Boolean locked) { this.locked = locked; }
+
+    public String getTermId() { return termId; }
+    public void setTermId(String termId) { this.termId = termId; }
+
+    public Double getFee() { return fee; }
+    public void setFee(Double fee) { this.fee = fee; }
+
+    // --- UPDATED CREDITS LOGIC (Max 4 credits + Auto Fee calculation) ---
+    public Integer getCredits() { return credits; }
+    
+    public void setCredits(Integer credits) { 
+        if (credits != null && credits > 4) {
+            throw new IllegalArgumentException("A course cannot exceed 4 credits.");
+        }
+        this.credits = credits;
+        
+        if (credits != null) {
+            this.fee = credits * 21300.0;
+        } else {
+            this.fee = 0.0;
+        }
+    }
 }

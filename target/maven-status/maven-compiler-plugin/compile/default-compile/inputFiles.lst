@@ -1,5 +1,6 @@
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\config\DataSourceConfig.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\config\WebSecurityConfig.java
+C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\controller\AdminAcademicController.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\controller\AuthController.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\controller\DashboardController.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\controller\FinanceController.java
@@ -21,6 +22,7 @@ C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\mo
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\model\User.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\AcademicRecordRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\AnnouncementRepository.java
+C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\CourseRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\FinanceBalanceRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\GradeRepository.java
 C:\Users\rukundo divin\Documents\e-contract\src\main\java\com\yourproject\ims\repository\PaymentTransactionRepository.java
