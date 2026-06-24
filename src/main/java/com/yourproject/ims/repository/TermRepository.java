@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface TermRepository extends JpaRepository<Term, String> {
     Optional<Term> findByActiveTrue();
+    Optional<Term> findByRegistrationOpenTrue();
 }

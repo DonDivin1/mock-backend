@@ -22,6 +22,9 @@ public class Term {
 
     private boolean active;
 
+    @Column(name = "registration_open")
+    private boolean registrationOpen;
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
     public String getYear() { return year; }
@@ -36,4 +39,6 @@ public class Term {
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+    public boolean isRegistrationOpen() { return registrationOpen; }
+    public void setRegistrationOpen(boolean registrationOpen) { this.registrationOpen = registrationOpen; }
 }
