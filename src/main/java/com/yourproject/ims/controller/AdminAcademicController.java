@@ -29,6 +29,19 @@ public class AdminAcademicController {
     // ─────────────────────────────────────────────────────────────
 
     /**
+     * Get all terms from the local database.
+     * GET /api/v1/admin/academic/terms/all
+     */
+    @GetMapping("/terms/all")
+    public ResponseEntity<?> getAllTerms() {
+        List<Term> terms = termRepository.findAll();
+        Map<String, Object> response = new HashMap<>();
+        response.put("content", terms);
+        response.put("totalElements", terms.size());
+        return ResponseEntity.ok(response);
+    }
+
+    /**
      * Admin selects a term to manage (does NOT open student registration yet).
      * Uses @RequestParam to avoid URL encoding issues with slashes in term IDs.
      * PUT /api/v1/admin/academic/terms/activate?termId=2025/1
